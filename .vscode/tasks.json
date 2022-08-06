@@ -8,10 +8,14 @@
             "type": "shell",
             "command": "echo Hello"
         },{
-            "label": "Montar proyecto",
+            "label": "Montar proyecto de desarrollo",
             "type": "shell",
             "command": "python3 -m build",
             "group": "build",
+        },{
+            "label": "Montar proyecto de distribución",
+            "type": "shell",
+            "command": "python setup.py bdist_wheel",
         },
     ]
 }
