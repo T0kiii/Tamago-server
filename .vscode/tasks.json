@@ -16,6 +16,10 @@
             "label": "Montar proyecto de distribución",
             "type": "shell",
             "command": "python setup.py bdist_wheel",
+        },{
+            "label": "Montar base de datos local",
+            "type": "shell",
+            "command": "flask --app src init-db",
         },
     ]
 }

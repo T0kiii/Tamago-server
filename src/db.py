@@ -1,7 +1,8 @@
 import sqlite3
 import click
-from flask import current_app, g, appcontext_tearing_down
+from flask import current_app, g
 
+# DATABASE_NAME = "tamagoDb.db"
 
 def get_db():
     if 'db' not in g:
@@ -22,6 +23,7 @@ def close_db(e=None):
 def init_db():
     db = get_db()
 
+    # Aquí se meten las tablas definidas en schema.sql
     with current_app.open_resource('schema.sql') as f:
         db.executescript(f.read().decode('utf8'))
 
@@ -33,6 +35,5 @@ def init_db_command():
     click.echo('Base de datos inicializada.')
 
 def init_app(app):
-    # appcontext_tearing_down(close_db)
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)

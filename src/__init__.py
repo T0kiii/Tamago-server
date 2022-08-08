@@ -1,9 +1,12 @@
 import os
-from flask import Flask
-from dotenv import load_dotenv
+from flask import Flask, jsonify, request
+from . import db
+from . import mascota
+# from dotenv import load_dotenv
 
-load_dotenv()  # take environment variables from .env.
+# load_dotenv()  # take environment variables from .env.
 
+ID_MASCOTA = 1
 
 def create_app(test_config=None):
     # create and configure the app
@@ -25,18 +28,72 @@ def create_app(test_config=None):
         os.makedirs(app.instance_path)
     except OSError:
         pass
-
-    # a simple page that says hello
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
     
-    from . import db
     db.init_app(app)
+    
+    # Meter blueprints hace que no compile la aplicación al perder el app_context en db.py
+    # from . import mascota
+    # app.register_blueprint(mascota.bp)
+    
+    @app.route('/', methods=["GET"])
+    def mostrar_masc():
+        mascota_principal = mascota.get_by_id(ID_MASCOTA)
+        
+        if mascota_principal == None:
+            return "No existe ninguna mascota"
+        else:
+            return mascota_principal
+    
+    @app.route('/mascota', methods=["GET"])
+    def mostrar_mascotas():
+        mascotas = mascota.get_mascotas()
+        return mascotas
 
+    @app.route("/mascota", methods=["POST"])
+    def crear_mascota():
+        detalles_mascota  = request.get_json()
+        nombre_mascota = detalles_mascota["nombre"]
+        result = mascota.insert_mascota(nombre_mascota)
+        return jsonify(result)
+
+    @app.route("/mascota", methods=["PUT"])
+    def update_masc():
+        detalles_mascota  = request.get_json()
+        masc = mascota.Mascota(
+            detalles_mascota["nombre"],
+            detalles_mascota["estaVivo"],
+            detalles_mascota["salud"],
+            detalles_mascota["hambre"],
+            detalles_mascota["felicidad"],
+            detalles_mascota["stamina"],
+            detalles_mascota["higiene"],
+            detalles_mascota["mood"]
+        )
+        result = mascota.update_mascota(masc)
+        return jsonify(result)
+    
+    @app.route("/mascota/<id>", methods=["DELETE"])
+    def borrar_masc():
+        detalles_mascota  = request.get_json()
+        id_mascota = detalles_mascota["id"]
+        result = mascota.delete_mascota(id_mascota)
+        return jsonify(result)
+    
+    """
+    Enable CORS. Disable it if you don't need CORS
+    """
+    @app.after_request
+    def after_request(response):
+        response.headers["Access-Control-Allow-Origin"] = "*" # <- You can change "*" for a domain for example "http://localhost"
+        response.headers["Access-Control-Allow-Credentials"] = "true"
+        response.headers["Access-Control-Allow-Methods"] = "POST, GET, OPTIONS, PUT, DELETE"
+        response.headers["Access-Control-Allow-Headers"] = "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization"
+        return response
+    
     return app
 
 
-# # FUNCIÓN MAIN
-# if __name__ == "__main__":
-#    app.run()
+# FUNCIÓN MAIN
+if __name__ == "__main__":
+    app = create_app(test_config=None)
+    app.run()

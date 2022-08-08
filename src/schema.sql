@@ -13,7 +13,7 @@ CREATE TABLE mascota (
   mas_felicidad REAL UNIQUE NOT NULL,
   mas_stamina REAL UNIQUE NOT NULL,
   mas_higiene REAL UNIQUE NOT NULL,
-  mood REAL NOT NULL
+  mas_mood REAL NOT NULL
 );
 
 -- CREATE TABLE post (
