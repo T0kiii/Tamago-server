@@ -54,12 +54,12 @@ class Mascota():
         self.higiene += 10.00
 
 
-def insert_mascota(masc_nombre):
+def insert_mascota(nombre_mascota):
     db = get_db()
     cursor = db.cursor()
     statement = "INSERT INTO mascota(mas_nombre, mas_estaVivo, mas_salud, mas_hambre, mas_felicidad, mas_stamina, mas_higiene, mas_mood) VALUES (?, ?, ?, ?,?, ?, ?, ?)"
     cursor.execute(statement,
-                   [masc_nombre,
+                   [nombre_mascota,
                     1,
                     100,
                     0,
@@ -89,11 +89,11 @@ def crear_masc_test():
     return True
 
 
-def update_mascota(mascota, ID_MASCOTA):
+def update_mascota(mascota, nombre_mascota):
     db = get_db()
     cursor = db.cursor()
-    statement = "UPDATE mascota SET name = ?, price = ?, rate = ? WHERE mas_id = ?"
-    statement = "UPDATE mascota SET mas_nombre = ?, mas_estaVivo = ?, mas_salud = ?, mas_hambre = ?, mas_felicidad = ?, mas_stamina = ?, mas_higiene = ?, mas_mood = ? WHERE mas_id = ?"
+    # statement = "UPDATE mascota SET name = ?, price = ?, rate = ? WHERE mas_id = ?"
+    statement = "UPDATE mascota SET mas_nombre = ?, mas_estaVivo = ?, mas_salud = ?, mas_hambre = ?, mas_felicidad = ?, mas_stamina = ?, mas_higiene = ?, mas_mood = ? WHERE mas_nombre = ?"
     cursor.execute(statement,
                 [mascota.nombre,
                 mascota.estaVivo,
@@ -103,30 +103,23 @@ def update_mascota(mascota, ID_MASCOTA):
                 mascota.stamina,
                 mascota.higiene,
                 mascota.mood,
-                ID_MASCOTA]
+                nombre_mascota]
                 )
     db.commit()
     return True
 
-def delete_mascota(ID_MASCOTA):
+def delete_mascota(nombre_mascota):
     db = get_db()
     cursor = db.cursor()
-    statement = "DELETE FROM mascota WHERE mas_id = ?"
-    cursor.execute(statement, [ID_MASCOTA])
+    statement = "DELETE FROM mascota WHERE mas_nombre = ?"
+    cursor.execute(statement, [nombre_mascota])
     db.commit()
     return True
 
-def get_by_id(ID_MASCOTA):
+def get_by_pk(nombre_mascota):
     db = get_db()
     cursor = db.cursor()
-    statement = "SELECT mas_nombre, mas_estaVivo, mas_salud, mas_hambre, mas_felicidad, mas_stamina, mas_higiene, mas_mood FROM mascota WHERE mas_id = ?"
-    cursor.execute(statement, [ID_MASCOTA])
-    return cursor.fetchone()
-
-def get_mascota_id(nombre_mascota):
-    db = get_db()
-    cursor = db.cursor()
-    statement = "SELECT mas_id FROM mascota WHERE mas_nombre = ?"
+    statement = "SELECT mas_nombre, mas_estaVivo, mas_salud, mas_hambre, mas_felicidad, mas_stamina, mas_higiene, mas_mood FROM mascota WHERE mas_nombre = ?"
     cursor.execute(statement, [nombre_mascota])
     return cursor.fetchone()
 

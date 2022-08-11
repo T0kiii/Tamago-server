@@ -37,7 +37,7 @@ def create_app(test_config=None):
     
     @app.route('/', methods=["GET"])
     def mostrar_masc():
-        mascota_principal = mascota.get_by_id(ID_MASCOTA)
+        mascota_principal = mascota.get_by_pk(ID_MASCOTA)
         
         if mascota_principal == None:
             return "No existe ninguna mascota"

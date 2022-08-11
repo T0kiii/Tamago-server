@@ -4,8 +4,8 @@ DROP TABLE IF EXISTS mascota;
 -- DROP TABLE IF EXISTS post;
 
 CREATE TABLE mascota (
-  mas_id INTEGER PRIMARY KEY AUTOINCREMENT,
-  mas_nombre TEXT UNIQUE NOT NULL,
+  -- mas_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  mas_nombre TEXT PRIMARY KEY,
   -- SQLite does not have a separate Boolean storage class. Instead, Boolean values are stored as integers 0 (false) and 1 (true).
   mas_estaVivo INTEGER UNIQUE NOT NULL,
   mas_salud REAL UNIQUE NOT NULL,
