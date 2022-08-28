@@ -16,6 +16,11 @@ CREATE TABLE mascota (
   mas_mood REAL NOT NULL
 );
 
+INSERT INTO mascota(
+  mas_nombre, mas_estaVivo, mas_salud, mas_hambre, mas_felicidad, mas_stamina, mas_higiene, mas_mood
+  ) 
+VALUES ("Michi", 1, 100.00, 10.00, 70.00, 70, 80.00, 70)
+
 -- CREATE TABLE post (
 --   id INTEGER PRIMARY KEY AUTOINCREMENT,
 --   author_id INTEGER NOT NULL,
