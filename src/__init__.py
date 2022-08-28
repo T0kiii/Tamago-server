@@ -1,5 +1,6 @@
+import json
 import os
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, render_template, request
 from . import db
 from . import mascota
 # from dotenv import load_dotenv
@@ -34,13 +35,16 @@ def create_app(test_config=None):
     # app.register_blueprint(mascota.bp)
     
     @app.route('/', methods=["GET"])
-    def mostrar_masc():
+    def mostrar_masc_default():
         mascota_principal = mascota.get_mascota(mascota.NOMBRE_MASCOTA)
         
         if mascota_principal == None:
             return "No existe ninguna mascota"
         else:
-            return mascota_principal
+            print(mascota_principal)
+            # return jsonify(json.dumps(mascota_principal))
+            # return str(mascota_principal)
+            return render_template('index.html', mascota = mascota_principal)
     
     # @app.route('/mascota', methods=["GET"])
     # def mostrar_mascotas():
@@ -48,7 +52,7 @@ def create_app(test_config=None):
     #     return mascotas
     
     @app.route('/mascota', methods=["GET"])
-    def mostrar_mascotas():
+    def mostrar_mascota():
         miMascota = mascota.get_mascota(mascota.NOMBRE_MASCOTA)
         return miMascota
 

@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <title> Tamago Server </title>
+        <link rel="shortcut icon" href="{{url_for('static', filename = 'iconos/icono.svg')}}" type="image/x-icon">
+        <link rel="stylesheet" href="{{url_for('static', filename = 'style.css')}}">
+    </head>
+    <body>
+        <h1>{{mascota.nombre}}</h1>
+        <table>
+            <tr>
+              <th>estaVivo</th>
+              <td>{{mascota.estaVivo}}</td>
+            </tr>
+            <tr>
+              <th>salud</th>
+              <td>{{mascota.salud}}</td>
+            </tr>
+            <tr>
+              <th>hambre</th>
+              <td>{{mascota.hambre}}</td>
+            </tr>
+            <tr>
+              <th>felicidad</th>
+              <td>{{mascota.felicidad}}</td>
+            </tr>
+            <tr>
+              <th>stamina</th>
+              <td>{{mascota.stamina}}</td>
+            </tr>
+            <tr>
+              <th>higiene</th>
+              <td>{{mascota.higiene}}</td>
+            </tr>
+            <tr>
+              <th>mood</th>
+              <td>{{mascota.mood}}</td>
+            </tr>
+        </table> 
+    </body>
+</html>
