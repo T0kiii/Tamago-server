@@ -8,6 +8,7 @@ from src.db import get_db
 bp = Blueprint('mascota', __name__, url_prefix='/')
 
 NOMBRE_MASCOTA = "Michi"
+ACCIONES_MASCOTA = ["ALIMENTAR", "JUGAR", "LIMPIAR", "CREAR", "BORRAR"]
 
 class Mascota():
     """
@@ -209,6 +210,10 @@ def get_all_mascotas():
 
 
 def realizar_accion(accion: str):
+    if accion not in ACCIONES_MASCOTA:
+        print("Acción inválida")
+        return "Acción inválida"
+    
     match accion:
         case "ALIMENTAR":
             print("Mascota alimentada")
